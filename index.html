@@ -61,7 +61,7 @@
   <canvas id="canvas"></canvas>
   <div id="highlightBox"></div>
   <img id="faceZoom" />
-  <button id="captureButton">Start</button>
+  <button id="captureButton">Face Roulette Start</button>
 
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
@@ -100,7 +100,9 @@
         faceapi.matchDimensions(canvas, displaySize);
 
         setInterval(async () => {
-          const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+          const detections = await faceapi.detectAllFaces(video, new faceapi.SsdMobilenetv1Options({
+            minConfidence: 0.3
+          }))
             .withFaceLandmarks()
             .withFaceDescriptors();
 
