@@ -173,54 +173,70 @@
       });
 
       captureButton.addEventListener('click', () => {
-        if (detectedFaces.length > 0) {
-          const randomIndex = Math.floor(Math.random() * detectedFaces.length);
-          const faceBox = detectedFaces[randomIndex];
 
-          // highlightBox 위치 및 크기 설정
-          const scaleX = video.offsetWidth / video.videoWidth;
-          const scaleY = video.offsetHeight / video.videoHeight;
+        let count = 5;
+        countdownElem.style.display = 'block';
+        countdownElem.textContent = count;
 
-          highlightBox.style.left = `${faceBox.x * scaleX}px`;
-          highlightBox.style.top = `${faceBox.y * scaleY}px`;
-          highlightBox.style.width = `${faceBox.width * scaleX}px`;
-          highlightBox.style.height = `${faceBox.height * scaleY}px`;
-          highlightBox.style.transform = 'scale(1)';
-          // 트랜지션을 강제로 트리거
-          highlightBox.style.transition = 'none'; // 초기화
-          highlightBox.style.transform = 'scale(1)';
-          highlightBox.offsetWidth; // 리플로우 트리거 (강제 렌더링)
+        const interval = setInterval(() => {
+          count--;
+          if (count > 0) {
+            countdownElem.textContent = count;
+          } else {
+            countdownElem.textContent = '';
+            countdownElem.style.display = 'none';
+            clearInterval(interval);
+          
+            if (detectedFaces.length > 0) {
+                const randomIndex = Math.floor(Math.random() * detectedFaces.length);
+                const faceBox = detectedFaces[randomIndex];
 
-          highlightBox.style.display = 'block';
+                // highlightBox 위치 및 크기 설정
+                const scaleX = video.offsetWidth / video.videoWidth;
+                const scaleY = video.offsetHeight / video.videoHeight;
 
-          setTimeout(() => {
-            highlightBox.style.transition = 'transform 0.4s ease';
-            highlightBox.style.transform = 'scale(2.6)';
-          }, 100);
+                highlightBox.style.left = `${faceBox.x * scaleX}px`;
+                highlightBox.style.top = `${faceBox.y * scaleY}px`;
+                highlightBox.style.width = `${faceBox.width * scaleX}px`;
+                highlightBox.style.height = `${faceBox.height * scaleY}px`;
+                highlightBox.style.transform = 'scale(1)';
+                // 트랜지션을 강제로 트리거
+                highlightBox.style.transition = 'none'; // 초기화
+                highlightBox.style.transform = 'scale(1)';
+                highlightBox.offsetWidth; // 리플로우 트리거 (강제 렌더링)
 
-          setTimeout(() => {
-            highlightBox.style.transform = 'scale(1)';
-          }, 900);
+                highlightBox.style.display = 'block';
 
-          // 얼굴 확대 이미지 캡처
-          const faceCanvas = document.createElement('canvas');
-          faceCanvas.width = faceBox.width * 2;
-          faceCanvas.height = faceBox.height * 2;
-          const faceCtx = faceCanvas.getContext('2d');
-          faceCtx.drawImage(video, faceBox.x, faceBox.y, faceBox.width, faceBox.height, 0, 0, faceCanvas.width, faceCanvas.height);
+                setTimeout(() => {
+                  highlightBox.style.transition = 'transform 0.4s ease';
+                  highlightBox.style.transform = 'scale(2.6)';
+                }, 100);
 
-          // 확대된 이미지 표시
-          faceZoom.src = faceCanvas.toDataURL();
-          faceZoom.style.left = `${Math.min(faceBox.x + faceBox.width + 20, video.videoWidth - faceBox.width)}px`;
-          faceZoom.style.top = `${faceBox.y}px`;
-          faceZoom.style.display = 'block';
+                setTimeout(() => {
+                  highlightBox.style.transform = 'scale(1)';
+                }, 900);
 
-          // 일정 시간 후 하이라이트 박스 숨김
-          setTimeout(() => {
-            highlightBox.style.display = 'none';
-          }, 2000);
+                // 얼굴 확대 이미지 캡처
+                const faceCanvas = document.createElement('canvas');
+                faceCanvas.width = faceBox.width * 2;
+                faceCanvas.height = faceBox.height * 2;
+                const faceCtx = faceCanvas.getContext('2d');
+                faceCtx.drawImage(video, faceBox.x, faceBox.y, faceBox.width, faceBox.height, 0, 0, faceCanvas.width, faceCanvas.height);
 
-        }
+                // 확대된 이미지 표시
+                faceZoom.src = faceCanvas.toDataURL();
+                faceZoom.style.left = `${Math.min(faceBox.x + faceBox.width + 20, video.videoWidth - faceBox.width)}px`;
+                faceZoom.style.top = `${faceBox.y}px`;
+                faceZoom.style.display = 'block';
+
+                // 일정 시간 후 하이라이트 박스 숨김
+                setTimeout(() => {
+                  highlightBox.style.display = 'none';
+                }, 2000);
+
+            }
+          }
+        },1000);
       });
     });
   </script>
