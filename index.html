@@ -54,6 +54,37 @@
     #captureButton:hover {
       background-color: #45a049;
     }
+    #usageModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    #usageModalContent {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 1000px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    #usageModalContent h2 {
+      margin-top: 0;
+    }
+
+    #usageModal button {
+      margin-top: 20px;
+      float: right;
+      padding: 8px 16px;
+    }
+
   </style>
   <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
 </head>
@@ -64,7 +95,21 @@
   <div id="highlightBox"></div>
   <img id="faceZoom" />
   <button id="captureButton">Face Roulette Start</button>
-
+  <div id="usageModal">
+    <div id="usageModalContent">
+      <h2>📘 Face Recognition Roulette</h2>
+      <p>
+        How to Use:
+        <ul>
+          <li>1. Camera permission is required to detect faces captured by your device’s camera.</li>
+          <li>2. When you're ready, press the Start button.</li>
+          <li>3. The camera will detect all visible faces and randomly select one.</li>
+          <li>4. The selected face will be highlighted with a red focus frame.</li>
+        </ul>
+      </p>
+      <button onclick="document.getElementById('usageModal').style.display='none'">OK</button>
+    </div>
+  </div>
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
       const video = document.getElementById('video');
