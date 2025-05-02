@@ -95,6 +95,15 @@
   <div id="highlightBox"></div>
   <img id="faceZoom" />
   <button id="captureButton">Face Roulette Start</button>
+  <div id="countdown" style="
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 100px;
+  font-weight: bold;
+  color: red;
+  display: none;"></div>
   <div id="usageModal">
     <div id="usageModalContent">
       <h2>📘 Face Recognition Roulette</h2>
@@ -118,6 +127,7 @@
       const faceZoom = document.getElementById('faceZoom');
       const captureButton = document.getElementById('captureButton');
       const highlightBox = document.getElementById('highlightBox');
+      const countdownElem = document.getElementById('countdown');
       let detectedFaces = [];
 
       // 모델 로딩
